@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 public class MainCls {
 		
+	    // ** First Part - a **
 		public int cntMail(List<Employee> employeeList)
 		{	
 			int cnt = 0;
@@ -21,9 +22,9 @@ public class MainCls {
 			return cnt;
 		}
 		
+		// ** First Part - b **
 		public int cntFemail(List<Employee> employeeList)
 		{	
-			
 			int cnt = 0;
 			
 			Stream<Employee> stream =  employeeList.stream();
@@ -32,13 +33,24 @@ public class MainCls {
 			return cnt;
 		}
 		
+		// ** Second **
 		public void printOrganizationName(List<Employee> employeeList)
 		{
 			Stream<Employee> stream = employeeList.stream();
 			
+			System.out.println("Following department names are :- ");
+			// ** Way - 1 **
 			stream.map(Employee::getDepartment).distinct().forEach(System.out::println);
+			
+			// ** Way - 2 **
+			// stream.map(Emp -> Emp.getDepartment()).distinct().forEach(em -> System.out.println(em));
+			
+			// ** Way - 3 **
+			// List<String> depName = stream.map(Emp -> Emp.getDepartment()).distinct().collect(Collectors.toList());
+			
 		}
 		
+		// ** Third **
 		public Map<String,Double> averageAgeOfMale(List<Employee> employeeList)
 		{
 			Stream<Employee> stream = employeeList.stream();
@@ -49,6 +61,7 @@ public class MainCls {
 			return averageAgeByGender;
 		}
 		
+		// ** Fourth **
 		public Optional<Employee> highestPaidEmployee(List<Employee> employeeList)
 		{
 			Stream<Employee> stream = employeeList.stream();
@@ -58,6 +71,7 @@ public class MainCls {
 			return highestPaidEmployee;
 		}
 		
+		// ** Fifth **
 		public List<String> employee2015JoinName(List<Employee> employeeList)
 		{
 			Stream<Employee> stream = employeeList.stream();
@@ -67,6 +81,7 @@ public class MainCls {
 			return nameList;
 		}
 		
+		// ** Six **
 		public Map<String,Long> departmentCnt(List<Employee> employeeList)
 		{
 			Stream<Employee> stream = employeeList.stream();
@@ -74,6 +89,7 @@ public class MainCls {
 			return depCnt;
 		}
 		
+		// ** Seven **
 		public Map<String , Double> getAverageSalofEachDep(List<Employee> employeeList)
 		{
 			Stream<Employee> stream = employeeList.stream();
@@ -83,7 +99,7 @@ public class MainCls {
 			return averageSalEachDep;
 		}
 		
-		
+		// ** Eight **
 		public Optional<Employee>  FindYoungeEmpInPro(List<Employee> employeeList)
 		{
 			Optional<Employee> youngestMale = employeeList.stream()
@@ -94,6 +110,7 @@ public class MainCls {
 			return youngestMale;
 		}
 		
+		// ** Nine **
 		public Map<String, Long> getCntInSalesAndMarketing(List<Employee> employeeList)
 		{
 			
@@ -102,24 +119,28 @@ public class MainCls {
 			return cntInSalesAndMarketing;
 		}
 		
+		// ** Ten Part - A**
 		public OptionalDouble getAvgSalOfMale(List<Employee> employeeList)
 		{
 		    OptionalDouble avgSalOfFemale = employeeList.stream().filter(emp -> "Male".equals(emp.getGender())).mapToDouble(Employee::getSalary).average();
 			return avgSalOfFemale;
 		}
 		
+		// ** Ten Par - B **
 		public OptionalDouble getAvgSalOfFemale(List<Employee> employeeList)
 		{
 		    OptionalDouble avgSalOfFemale = employeeList.stream().filter(emp -> "Female".equals(emp.getGender())).mapToDouble(Employee::getSalary).average();
 			return avgSalOfFemale;
 		}
 		
+		// ** Eleven ** 
 		public Map<String,List<String>> printAllEmployee(List<Employee> employeeList)
 		{
 			Map<String , List<String>> empDetail = employeeList.stream().collect(Collectors.groupingBy(Employee::getDepartment,Collectors.mapping(Employee::getName, Collectors.toList())));
 			return empDetail;
 		}
 		
+		// ** Fourteen **
 		public Employee  FindOldestEmpInOrg(List<Employee> employeeList)
 		{
 			Employee OldestEmp = employeeList.stream().max((employee1,employee2) -> Integer.compare(employee1.getAge(),employee2.getAge())).orElse(null);
@@ -201,7 +222,6 @@ public class MainCls {
 				System.out.println("Average age for " + department + ": " + salary);
 	        });
 	        
-			
 			// ** Eight **
 			Optional<Employee> youngestMaleInProductDevelopment = obj.FindYoungeEmpInPro(employeeList);
 			if (youngestMaleInProductDevelopment.isPresent()) {
