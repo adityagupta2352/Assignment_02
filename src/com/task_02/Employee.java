@@ -1,25 +1,25 @@
 package com.task_02;
 
 public class Employee {
-    
+
 	private int id;
-    private String name;
-    private int age;
-    private String gender;
-    private String department;
-    private int yearOfJoining;
-    private double salary;
-    
-    public Employee(int id , String name , int age , String gender , String department , int yearOfJoining , double salary) {
-        
-    	this.id = id;
-    	this.name = name;
-    	this.age = age;
-    	this.gender = gender;
-    	this.department = department;
-    	this.yearOfJoining = yearOfJoining;
-    	this.salary = salary;
-    }
+	private String name;
+	private int age;
+	private String gender;
+	private String department;
+	private int yearOfJoining;
+	private double salary;
+
+	public Employee(int id, String name, int age, String gender, String department, int yearOfJoining, double salary) {
+
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.gender = gender;
+		this.department = department;
+		this.yearOfJoining = yearOfJoining;
+		this.salary = salary;
+	}
 
 	public int getId() {
 		return id;
@@ -75,6 +75,5 @@ public class Employee {
 
 	public void setSalary(double salary) {
 		this.salary = salary;
-	}  
+	}
 }
-
