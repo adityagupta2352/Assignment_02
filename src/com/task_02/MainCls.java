@@ -12,23 +12,19 @@ import java.util.stream.Stream;
 public class MainCls {
 		
 	    // ** First Part - a **
-		public int cntMail(List<Employee> employeeList)
+		public long cntMail(List<Employee> employeeList)
 		{	
-			int cnt = 0;
-			
 			Stream<Employee> stream =  employeeList.stream();
-			cnt = (int) stream.filter(Employee -> "Male".equals(Employee.getGender())).count();
+			long cnt = stream.filter(Employee -> "Male".equals(Employee.getGender())).count();
 			
 			return cnt;
 		}
 		
 		// ** First Part - b **
-		public int cntFemail(List<Employee> employeeList)
+		public long cntFemail(List<Employee> employeeList)
 		{	
-			int cnt = 0;
-			
 			Stream<Employee> stream =  employeeList.stream();
-			cnt = (int) stream.filter(Employee -> "Female".equals(Employee.getGender())).count();
+			long cnt = stream.filter(Employee -> "Female".equals(Employee.getGender())).count();
 			
 			return cnt;
 		}
@@ -65,9 +61,18 @@ public class MainCls {
 		public Optional<Employee> highestPaidEmployee(List<Employee> employeeList)
 		{
 			Stream<Employee> stream = employeeList.stream();
-			
+
 			Optional<Employee> highestPaidEmployee =  stream.max(Comparator.comparingDouble(Employee::getSalary));
+
+			// Optional<Employee> highestPaidEmployee =  stream.max(Comparator.comparingDouble(emp -> emp.getSalary()));
 			
+			/*
+			  compare method of the Comparator interface expects two object references as arguments, not primitive data types like int.
+			  To use this int value with a Comparator, 
+			  you need to wrap it in an Integer object because Comparator works with objects, not primitive types.
+			*/
+			
+			// Optional<Employee> highestPaidEmployee =  stream.max((i1,i2) -> Integer.compare((int)i1.getSalary(), (int)i2.getSalary()));
 			return highestPaidEmployee;
 		}
 		
@@ -103,10 +108,17 @@ public class MainCls {
 		public Optional<Employee>  FindYoungeEmpInPro(List<Employee> employeeList)
 		{
 			Optional<Employee> youngestMale = employeeList.stream()
+		            .filter(employee -> "Product Development".equals(employee.getDepartment()))
+		            .filter(employee -> "Male".equals(employee.getGender()))
+		            .min(Comparator.comparingInt(Employee::getAge));
+			
+			/*
+			Optional<Employee> youngestMale = employeeList.stream()
             .filter(employee -> "Product Development".equals(employee.getDepartment()))
             .filter(employee -> "Male".equals(employee.getGender()))
             .min((employee1, employee2) -> Integer.compare(employee1.getAge(), employee2.getAge()));
-
+           */
+			
 			return youngestMale;
 		}
 		
@@ -122,8 +134,11 @@ public class MainCls {
 		// ** Ten Part - A**
 		public OptionalDouble getAvgSalOfMale(List<Employee> employeeList)
 		{
-		    OptionalDouble avgSalOfFemale = employeeList.stream().filter(emp -> "Male".equals(emp.getGender())).mapToDouble(Employee::getSalary).average();
-			return avgSalOfFemale;
+		    OptionalDouble avgSalOfMale = employeeList.stream().filter(emp -> "Male".equals(emp.getGender())).mapToDouble(Employee::getSalary).average();
+
+		    // avgSaleOfMale = employeeList.stream().filter(emp -> "Male".equals(emp.getGender())).collect(Collectors.averagingDouble(Employee::getSalary));
+
+			return avgSalOfMale;
 		}
 		
 		// ** Ten Par - B **
@@ -143,7 +158,9 @@ public class MainCls {
 		// ** Fourteen **
 		public Employee  FindOldestEmpInOrg(List<Employee> employeeList)
 		{
-			Employee OldestEmp = employeeList.stream().max((employee1,employee2) -> Integer.compare(employee1.getAge(),employee2.getAge())).orElse(null);
+			// Employee OldestEmp = employeeList.stream().max((employee1,employee2) -> Integer.compare(employee1.getAge(),employee2.getAge())).orElse(null);
+
+			Employee OldestEmp = employeeList.stream().max(Comparator.comparingInt(Employee::getAge)).orElse(null);
 
 			return OldestEmp;
 		}
@@ -204,8 +221,8 @@ public class MainCls {
 			// }
 			
 			// ** Fifth **
-			List<String> empName = obj.employee2015JoinName(employeeList);
-			System.out.println("Names of employees who joined after 2015:");
+			// List<String> empName = obj.employee2015JoinName(employeeList);
+			// System.out.println("Names of employees who joined after 2015:");
 		    // empName.forEach(System.out::println);
 		    
 		    // ** Six **
@@ -221,7 +238,7 @@ public class MainCls {
 	        avgSalEach.forEach((department, salary) -> {
 				System.out.println("Average age for " + department + ": " + salary);
 	        });
-	        
+	        */
 			// ** Eight **
 			Optional<Employee> youngestMaleInProductDevelopment = obj.FindYoungeEmpInPro(employeeList);
 			if (youngestMaleInProductDevelopment.isPresent()) {
@@ -299,13 +316,15 @@ public class MainCls {
 	                e -> System.out.println("Employee ID: " + e.getId() + ", Name: " + e.getName() + ", Age: " + e.getAge()));
 	        System.out.println("\n");
 			
-			*/
 			// ** Fourtein **
 			Employee oldestEmp = obj.FindOldestEmpInOrg(employeeList);
+			if(!oldestEmp.equals(null)) {
 			System.out.println("Name :- " + oldestEmp.getName());
 			System.out.println("Age :- " + oldestEmp.getAge());
 			System.out.println("Department :- " + oldestEmp.getDepartment());
-			 
+			}
+			else
+			System.out.println("Not oldest employee is present");
 			
 		}
 }
