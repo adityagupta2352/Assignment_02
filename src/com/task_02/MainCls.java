@@ -50,7 +50,7 @@ public class MainCls {
 		Stream<Employee> stream = employeeList.stream();
 
 		Map<String, Double> averageAgeByGender = stream
-				.collect(Collectors.groupingBy(Employee::getGender, Collectors.averagingDouble(Employee::getAge)));
+				.collect(Collectors.groupingBy(Employee::getGender, Collectors.averagingInt(Employee::getAge)));
 
 		return averageAgeByGender;
 	}
